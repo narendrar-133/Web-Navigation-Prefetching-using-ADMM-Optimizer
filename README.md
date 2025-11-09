@@ -101,9 +101,5 @@ Prediction latency measures the time required for the model to generate a predic
 | **LSTM / BiLSTM** | **High Accuracy** (Top-5 Hit Rate $\sim 84\%$) | Higher Latency ($\sim 0.86ms$ to $1.44ms$ average) |
 | **Constrained Markov** | **Extremely Low Latency** ($0.03ms$ average) | Lower Accuracy (Top-5 Hit Rate $\sim 61.6\%$) |
 
-The choice of model depends on the application's priority:
-1.  **Prioritizing Accuracy (Better Predictions):** Choose **LSTM** or **BiLSTM**.
-2.  **Prioritizing Speed (Real-Time Performance):** Choose the **Constrained Markov Model**.
-## 🤝 Contribution
 
 This project is open to contributions, bug reports, and suggestions. Feel free to fork the repository and submit a pull request!
