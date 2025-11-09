@@ -62,22 +62,48 @@ pip install pandas numpy scikit-learn openpyxl pyxlsb
     python simulation.py --model_path [path/to/trained/model]
     ```
 
-## 📈 Performance & Results
+## 🎯 Accuracy and Hit Rate Metrics
 
-### **Key Metrics**
+The table below details the predictive accuracy, showing how often the correct next-click was found in the top recommendations.
 
-* **Latency Reduction (ms)**
-* **Cache Hit Ratio (%)**
-* **Bandwidth Overhead (%)**
+| Model | Top-1 Accuracy (%) | Top-3 Hit Rate (%) | Top-5 Hit Rate (%) |
+| :--- | :--- | :--- | :--- |
+| **Constrained Markov** | $51.02\%$ | $59.66\%$ | $61.59\%$ |
+| **LSTM** | $72.3\%$ | $82.1\%$ | **$84.6\%$** |
+| **BiLSTM** | **$73.0\%$** | $81.5\%$ | $83.7\%$ |
 
-### **Preliminary Findings**
+### Key Accuracy Findings
+* **Best Top-5 Hit Rate:** The **LSTM** model achieved the highest overall predictive accuracy with a **$84.6\%$ Top-5 Hit Rate**, making it the most reliable for providing a list of strong recommendations.
+* **Best Top-1 Accuracy:** The **BiLSTM** model narrowly outperformed the others in predicting the single most likely next-click with a **$73.0\%$ Top-1 Accuracy**.
 
-*(***Note:*** *Replace these placeholders with your actual simulation results.*)
+---
 
-* **Achieved Hit Rate**: The model demonstrated an average **45% cache hit rate** for next-click prediction.
-* **Observed Gain**: This resulted in an average **250ms latency reduction** for cached content.
-* **Efficiency**: Bandwidth consumption from incorrect prefetches was maintained below **15%**.
+## ⏱️ Prediction Latency Metrics (ms)
 
+Prediction latency measures the time required for the model to generate a prediction, critical for real-time applications.
+
+| Model | Average Prediction Latency (ms) | P95 Latency (ms) | P99 Latency (ms) |
+| :--- | :--- | :--- | :--- |
+| **Constrained Markov** | **$0.03$** | $0.00$ | $0.92$ |
+| **LSTM** | $0.86$ | $1.08$ | $1.48$ |
+| **BiLSTM** | $1.44$ | $1.57$ | **$1.98$** |
+
+### Key Latency Findings
+* **Lowest Latency:** The **Constrained Markov Model** is significantly faster, boasting an average prediction latency of only **$0.03ms$**, which is ideal for extremely low-latency requirements.
+* **Worst-Case Latency (P99):** The **Constrained Markov Model** also maintains the best worst-case performance, with $99\%$ of predictions completing in under $0.92ms$.
+
+---
+
+## 📊 Summary and Trade-Off
+
+| Model | Advantage | Trade-Off |
+| :--- | :--- | :--- |
+| **LSTM / BiLSTM** | **High Accuracy** (Top-5 Hit Rate $\sim 84\%$) | Higher Latency ($\sim 0.86ms$ to $1.44ms$ average) |
+| **Constrained Markov** | **Extremely Low Latency** ($0.03ms$ average) | Lower Accuracy (Top-5 Hit Rate $\sim 61.6\%$) |
+
+The choice of model depends on the application's priority:
+1.  **Prioritizing Accuracy (Better Predictions):** Choose **LSTM** or **BiLSTM**.
+2.  **Prioritizing Speed (Real-Time Performance):** Choose the **Constrained Markov Model**.
 ## 🤝 Contribution
 
 This project is open to contributions, bug reports, and suggestions. Feel free to fork the repository and submit a pull request!
